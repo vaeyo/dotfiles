@@ -1,0 +1,91 @@
+#!/bin/bash
+
+declare -A LABELS
+declare -A COMMANDS
+
+###
+# List of defined 'Launchers'
+
+# launch programs
+COMMANDS["App-Launcher"]="rofi-apps"
+LABELS["App-Launcher"]=""
+
+# open bookmarks
+# Must be user configured
+#COMMANDS["Web-Bookmarks"]="rofi-web-bookmarks"
+#LABELS["Web-Bookmarks"]=""
+
+# open custom web searches
+COMMANDS["Web-Search"]="rofi-web-search"
+LABELS["Web-Search"]=""
+
+# search local files
+COMMANDS["File-Search"]="rofi-locate"
+LABELS["File-Search"]=""
+
+# show clipboard history
+COMMANDS["Clipboard"]="rofi-clipboard"
+LABELS["Clipboard"]=""
+
+# show calculator
+COMMANDS["Calculator"]="rofi-calculator"
+LABELS["Calculator"]=""
+
+# show calculator
+COMMANDS["/home/vio/.config/mbrun/mbmain"]="/home/vio/.config/mbrun/mbmain"
+LABELS["Extras"]=""
+
+################################################################################
+# do not edit below
+################################################################################
+##
+# Generate menu
+##
+function print_menu()
+{
+    for key in ${!LABELS[@]}
+    do
+  echo "$key    ${LABELS}"
+     #   echo "$key    ${LABELS[$key]}"
+     # my top version just shows the first field in labels row, not two words side by side
+    done
+}
+##
+# Show rofi.
+##
+function start()
+{
+    # print_menu | rofi -dmenu -p "?=>"
+    print_menu | sort | rofi -lines 9 -font "Iceberg 13" -dmenu -mesg " Available " -i -p "Launch: "
+
+}
+
+
+# Run it
+value="$(start)"
+
+# Split input.
+# grab upto first space.
+choice=${value%%\ *}
+# graph remainder, minus space.
+input=${value:$((${#choice}+1))}
+
+##
+# Cancelled? bail out
+##
+if test -z ${choice}
+then
+    exit
+fi
+
+# check if choice exists
+if test ${COMMANDS[$choice]+isset}
+then
+    # Execute the choice
+    eval echo "Executing: ${COMMANDS[$choice]}"
+    eval ${COMMANDS[$choice]}
+else
+ eval  $choice | rofi
+ # prefer my above so I can use this same script to also launch apps like geany or leafpad etc (DK)
+ #   echo "Unknown command: ${choice}" | rofi -dmenu -p "error"
+fi

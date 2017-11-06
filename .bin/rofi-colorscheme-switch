@@ -1,0 +1,8 @@
+#!/bin/bash
+set -eu
+
+if [[ -z "$@" ]]; then
+    colorscheme-switch --list
+else
+    colorscheme-switch --switch "$@"
+fi

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+rofi -modi run,drun,window -lines 9 -show drun -sidebar-mode -font "Ubuntu 11"

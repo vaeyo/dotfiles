@@ -1,0 +1,46 @@
+#!/usr/bin/sh
+ 
+cat << EOF
+diff --git a/source/history.c b/source/history~.c
+index 25cfcb0..dfefc12 100644
+--- a/source/history.c
++++ b/source/history.c
+@@ -37,7 +37,7 @@
+ #include "history.h"
+ #include "settings.h"
+  
+-#define HISTORY_MAX_ENTRIES    25
++#define HISTORY_MAX_ENTRIES    $1
+  
+ /**
+  * History element
+diff --git a/src/rofi-1.3.1/test/history-test.c b/src/rofi-1.3.1/test/history-test-.c
+index 2a489ac..6b34fad 100644
+--- a/test/history-test.c
++++ b/test/history-test.c
+@@ -59,7 +59,7 @@ static void history_test ( void )
+  
+     g_strfreev ( retv );
+  
+-    for ( unsigned int in = length + 1; in < 26; in++ ) {
++    for ( unsigned int in = length + 1; in < `expr $1 + 1`; in++ ) {
+         char *p = g_strdup_printf ( "aap%i", in );
+         printf ( "%s- %d\n", p, in );
+         history_set ( file, p );
+@@ -72,13 +72,13 @@ static void history_test ( void )
+  
+         g_free ( p );
+     }
+-    // Max 25 entries.
++    // Max 75 entries.
+     history_set ( file, "blaat" );
+     retv = history_get_list ( file, &length );
+  
+     TASSERT ( retv != NULL );
+-    TASSERT ( length == 25 );
+-    for ( unsigned int in = 0; in < 24; in++ ) {
++    TASSERT ( length == 75 );
++    for ( unsigned int in = 0; in < `expr $1 - 1`; in++ ) {
+         char *p = g_strdup_printf ( "aap%i", in + 2 );
+         TASSERT ( g_strcmp0 ( retv[in], p ) == 0 );
+EOF

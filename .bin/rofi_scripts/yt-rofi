@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+a=$(date -Idate | xargs ytcc -o ID Channel Title URL --list -s | sed 's/\s\+[│]\s\+/\n/g' | tail -n +6)
+
+i=0
+read=
+choice="`echo \"$a\" | while read line; do
+    if [ $((i % 4)) == 3 ] ; then
+        echo "$read│ $line"
+        read=
+    else
+        read+="$line │ "
+    fi
+    i=$((i + 1))
+done | rofi -dmenu`"
+
+if [ "$choice" == "" ]; then
+    echo "No choice, quitting."
+    exit
+fi
+
+echo "$choice" | sed 's/.*https/https/' | xargs mpv --no-terminal
+
+if [ "$1" == "-m" ]; then
+    ytcc -m "`echo \"$choice\" | sed 's/ .*//'`"
+fi

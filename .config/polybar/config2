@@ -1,0 +1,967 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;; 			
+;;;;;;      ♟ ♞ ♝ ♜ ♛ ♚                   				 ;;;;;;;
+;;;;;;        ─ │                      				 ;;;;;;;
+;;;;;;                             				 ;;;;;;;
+;;;;;;                             			 ;;;;;;;
+;;;;;;                      ↵      		 ;;;;;;;
+;;;;;;         ⚡✓ ✘  🌞                		 ;;;;;;;
+;;;;;;             ➤ ─              			 ;;;;;;;
+;;;;;;       🔥 👌 ( ͡° ͜ʖ ͡°)                     ;;;;;;;
+;;;;;;              ○ ●        				 ;;;;;;;
+;;;;;;                     	         ;;;;;;;
+;;;;;;          	
+;;;;;; 						;;;;;; 							;;;;;;;
+
+[colors]
+color15_i3wmthemer	    = ${xrdb:color15}
+color14_i3wmthemer	    = ${xrdb:color14}
+color13_i3wmthemer	    = ${xrdb:color13}
+color12_i3wmthemer	    = ${xrdb:color12}
+color11_i3wmthemer	    = ${xrdb:color11}
+color10_i3wmthemer	    = ${xrdb:color10}
+color09_i3wmthemer	      = ${xrdb:color9}
+color08_i3wmthemer	      = ${xrdb:color8}
+color07_i3wmthemer	      = ${xrdb:color7}
+color06_i3wmthemer	      = ${xrdb:color6}
+color05_i3wmthemer	      = ${xrdb:color5}
+color04_i3wmthemer	      = ${xrdb:color4}
+color03_i3wmthemer	      = ${xrdb:color3}
+color02_i3wmthemer	      = ${xrdb:color2}
+color01_i3wmthemer      = ${xrdb:color1}
+color00_i3wmthemer	      = ${xrdb:color0}
+foreground_i3wmthemer 	= ${xrdb:foreground}
+background_i3wmthemer 	= ${xrdb:background}
+
+accent = #E62D63
+
+[bar/top]
+enable-ipc = true
+;monitor = eDP1
+monitor = eDP1
+width = 100%
+height = 27
+
+;background = #222
+background = #0A0D15
+foreground = #eee
+
+border-bottom = 1
+border-bottom-color = #333
+
+overline-size = 10
+overline-color = ${self.background}
+underline-size = 1
+underline-color = ${self.background}
+
+spacing = 3
+;padding-right = 4
+padding-left = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 6
+
+
+font-0 = FuturaLightCTT-Regular:size=9;0
+font-1 = MaterialIcons:size=10;2
+font-2 = FuturaLightCTT-Bold:size=9;0
+font-3 = Siji:pixelsize=10;1
+font-4 = FontAwesome:size=10;0
+
+odules-left = 
+;modules-center = mail color term fm scrot clip  
+modules-center = mpd
+modules-right = menu-apps seperator pipe date
+
+
+
+wm-restack = i3
+
+tray-position = false
+
+[bar/bottom]
+monitor = eDP1
+bottom = true
+width = 110%
+height = 27
+
+background = #060E16
+foreground = #eefafafa
+
+overline-size = 3
+overline-color = ${colors.accent}
+underline-size = 3
+underline-color = ${colors.accent}
+
+;border-color = #ff0000
+border-top = 3
+border-top-color = #3d3d3d
+;border-bottom = 0
+;border-bottom-color = #E62D63
+
+spacing = 3
+;padding-right = 4
+padding-left = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 6
+
+font-0 = FuturaLightCTT-Regular:size=8;0
+font-1 = Unifont:size=5;0
+font-2 = FontAwesome:size=8;0
+font-3 = Siji:pixelsize=10;1
+font-4 = MaterialIcons:size=10;2
+font-5 = Termsynu:size=7;0
+
+modules-left = pipe menu redshift pkg battery pavolume
+modules-center = ewmh  
+modules-right =  weather  xbacklight cpu memory
+;modules-right = redshift pkg compton battery pavolume xbacklight cpu memory
+
+wm-restack = bspwm
+
+
+[bar/external]
+enable-ipc = true
+monitor = HDMI-2
+bottom = false
+;dock = true
+width = ${bar/bottom.width}
+height = ${bar/bottom.height}
+
+background = #FAFDFF
+foreground = #2E3436
+
+underline-size = ${bar/bottom.underline-size}
+underline-color = ${bar/bottom.underline-color}
+overline-size = ${bar/bottom.overline-size}
+overline-color = ${bar/bottom.overline-color}
+
+border-bottom.= ${bar/bottom.border-bottom}
+border-bottom.color = ${bar/bottom.border-bottom-color}
+
+spacing = ${bar/bottom.spacing}
+padding-left = ${bar/bottom.padding-left}
+padding-right = ${bar/bottom.padding-right}
+module-margin-left = 0
+module-margin-right = ${bar/bottom.module-margin-right}
+
+font-0 = ${bar/bottom.font-0}
+font-1 = ${bar/bottom.font-1}
+font-2 = ${bar/bottom.font-2}
+font-3 = ${bar/bottom.font-3}
+font-4 = ${bar/bottom.font-4}
+font-5 = ${bar/bottom.font-5}
+
+modules-left = menu-apps pipe mail scroll menu
+modules-center = weather 
+modules-right = battery clock
+
+wm-restack = ${bar/bottom.wm-restack}
+
+
+[module/fs-root]
+type = internal/fs
+mount-0 = /
+label-mounted = %{F#66D4C6}%percentage_used%%%{F-} used of %mountpoint%
+module-padding = 3
+
+
+[module/xbacklight]
+type = internal/xbacklight
+output = eDP-1
+format = <ramp> <bar>
+
+ramp-0 = 
+ramp-0-foreground = #666
+ramp-1 = 
+ramp-1-foreground = #999
+ramp-2 = 
+ramp-2-foreground = #fff
+
+bar-width = 12
+bar-indicator = 
+bar-indicator-font = 6
+bar-indicator-foreground = #ffffff
+bar-fill = ─
+bar-fill-font = 6
+bar-fill-foreground = #38BF8F
+bar-empty = ─
+bar-empty-font = 6
+bar-empty-foreground = #BF386A
+
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+format = <ramp> <label>
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = #666
+interactive = true
+
+
+[module/bspwm]
+type = internal/bspwm
+format = <label-state> <label-mode>
+
+ws-icon-0 = term;
+ws-icon-1 = web;
+ws-icon-2 = code;
+ws-icon-3 = music;
+ws-icon-4 = irssi;
+ws-icon-default = 
+
+label-dimmed-underline = ${root.background}
+
+label-focused = %icon%  %name%
+label-focused-foreground = #547FFF
+label-focused-background = #0A0D15
+;label-focused-underline = ${colors.accent}
+label-focused-underline = #FF4081
+label-focused-font = 4
+label-focused-padding = 4
+
+label-occupied = %icon%  %name%
+label-occupied-underline = #555555
+label-occupied-font = 4
+label-occupied-padding = 4
+
+label-urgent = %icon%  %name%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-underline = #9b0a20
+label-urgent-font = 4
+label-urgent-padding = 4
+
+label-empty = %icon%  %name%
+label-empty-foreground = #55ffffff
+label-empty-font = 4
+label-empty-padding = 4
+
+
+[module/i3]
+type = internal/i3
+
+label-visible = 
+label-visible-font = 5
+label-visible-padding-left = 1
+
+label-focused = 
+label-focused-foreground = ${colours.foreground-2}
+label-focused-font = 3
+label-focused-padding-left = 1
+
+label-unfocused = 
+label-unfocused-font = 5
+label-unfocused-padding-left = 1
+
+label-urgent = 
+label-urgent-foreground = ${colours.foreground-1}
+label-urgent-font = 3
+label-urgent-padding-left = 1
+
+
+
+[module/cpu]
+type = internal/cpu
+interval = 1.5
+
+format = <label> <ramp-coreload>
+
+label = CPU
+label-font = 3
+label-foreground = #99
+
+ramp-coreload-0 = ▁
+ramp-coreload-0-font = 2
+ramp-coreload-0-foreground = #3889BF
+ramp-coreload-1 = ▂
+ramp-coreload-1-font = 2
+ramp-coreload-1-foreground = #38BF8F
+ramp-coreload-2 = ▃
+ramp-coreload-2-font = 2
+ramp-coreload-2-foreground = #3889BF
+ramp-coreload-3 = ▄
+ramp-coreload-3-font = 2
+ramp-coreload-3-foreground = #38BF8F
+ramp-coreload-4 = ▅
+ramp-coreload-4-font = 2
+ramp-coreload-4-foreground = #3889BF
+ramp-coreload-5 = ▆
+ramp-coreload-5-font = 2
+ramp-coreload-5-foreground = #495C87
+ramp-coreload-6 = ▇
+ramp-coreload-6-font = 2
+ramp-coreload-6-foreground = #FC476A
+ramp-coreload-7 = █
+ramp-coreload-7-font = 2
+ramp-coreload-7-foreground = #FC476A
+
+[module/memory]
+type = internal/memory
+interval = 0.2
+format = <label> <bar-used>
+
+label = RAM
+label-font = 3
+label-foreground = #99
+format-padding = 5
+
+
+bar-used-width = 20
+bar-used-gradient = true
+;bar-used-foreground-0 = #26928D
+;bar-used-foreground-1 = #4A9BBF
+;bar-used-foreground-2 = #546A9C
+;bar-used-foreground-3 = #6AADE0
+bar-used-foreground-0 = #37BB8C
+bar-used-foreground-1 = #38BF8F
+bar-used-foreground-2 = #38BFAB
+bar-used-foreground-3 = #BF3854
+bar-used-indicator = █
+bar-used-indicator-font = 5
+bar-used-indicator-foreground = #fff
+bar-used-fill = █
+bar-used-fill-font = 5
+bar-used-empty = █
+bar-used-empty-font = 5
+bar-used-empty-foreground = #44
+
+[module/wireless-network]
+type = internal/network
+interface = net1
+interval = 2.0
+ping-interval = 10
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+label-disconnected =    not connected
+label-disconnected-foreground = #66
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+
+animation-packetloss-0 = 
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 
+animation-packetloss-1-foreground = ${bar/top.foreground}
+animation-packetloss-framerate = 500
+
+[module/wired-network]
+type = internal/network
+interface = net0
+interval = 2.0
+
+label-connected =   %local_ip%
+label-disconnected = Ethernet disconnected
+label-disconnected-foreground = #66
+
+[module/mpd]
+type = internal/mpd
+host = 127.0.0.1
+port = 6600
+interval = 2
+format-prefix = ⏵
+format-prefix-foreground = #6D2692
+; Available tags:
+;   <label-song> (default)
+format-online = <label-song> <bar-progress>
+;format-playing = ${self.format-online}
+;format-paused = ${self.format-online}
+;format-stopped = ${self.format-online}
+
+; Available tags:
+;   <label-offline>
+;format-offline = <label-offline>
+
+; Available tokens:
+;   %artist%
+;   %album%
+;   %date%
+;   %title%
+; Default: %artist% - %title%
+label-song = %artist% - %title%
+
+; Available tokens:
+;   %elapsed%
+;   %total%
+; Default: %elapsed% / %total%
+;label-time = %elapsed% / %total%
+
+; Available tokens:
+;   None
+label-offline = 🎜 mpd is offline
+
+; Used to display the state of random/repeat/repeatone
+; Only applies if <icon-[random|repeat|repeatone]> is used
+toggle-on-foreground = #ff
+toggle-off-foreground = #55
+
+; Only applies if <bar-progress> is used
+bar-progress-width = 10
+bar-progress-indicator = ◈
+bar-progress-fill = ◆
+bar-progress-empty = ◇
+bar-progress-empty-foreground = #256f8a
+bar-progress-fill-foreground = #26928D
+
+[module/date]
+type = internal/date
+interval = 5
+format-padding = 5
+format-background = #10131E
+format-foreground = #2E3436
+format-underline = #7F919D
+date = %%{F#bb}%Y-%m-%d%%{F-}  %%{F#ee}%H:%M%%{F-}
+
+[module/volume]
+type = internal/volume
+
+format-volume = <label-volume> <bar-volume>
+label-volume = "🔊"
+label-volume-foreground = #90233f
+
+format-muted-foreground = #90233f
+label-muted = "🔇"
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #bc7374
+bar-volume-foreground-1 = #bc7374
+bar-volume-foreground-2 = #bc7374
+bar-volume-foreground-3 = #A32149
+bar-volume-foreground-4 = #55b9b0
+bar-volume-foreground-5 = #2ae1df
+bar-volume-foreground-6 = #2ae1df
+bar-volume-gradient = true
+bar-volume-indicator = 
+bar-volume-indicator-font = 2
+bar-volume-fill = •
+bar-volume-fill-font = 2
+bar-volume-empty = ·
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = #666666
+
+[module/battery]
+type = internal/battery
+; ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC0
+poll-interval = 5
+time-format = %H:%M
+format-underline = #F16696
+format-full-foreground = #f
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = 
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+bar-capacity-width = 10
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 =
+animation-charging-framerate = 750
+
+[module/xwindow]
+type = internal/xwindow
+label-maxlen = 75
+label-foreground = #bbb
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = "  "
+format-prefix-foreground = #7A7A7A
+label-foreground = #ffffff
+exec = ~/.config/polybar/weather
+
+[module/powermenu]
+type = custom/menu
+
+; Available tags:
+;   <label-toggle> (default) - gets replaced with <label-(open|close)>
+;   <menu> (default)
+;format = <label-toggle> <menu>
+format-background = #F1F2F6
+format-padding = 3
+
+label-open = Tiling
+label-close =x
+label-open-font = 1
+label-separator = |
+
+
+
+; "menu-LEVEL-N" has the same properties as "label-NAME" with
+; the additional "exec" property
+;
+; Available exec commands:
+;   menu_open-LEVEL
+;   menu_close
+; Other commands will be executed using "/usr/bin/env sh -c $COMMAND"
+
+menu-0-0 = Reload
+menu-0-0-foreground = #fff
+menu-0-0-exec = /home/pringle/bin/reload
+menu-0-1 = Grid
+menu-0-1-foreground = #fff
+menu-0-1-exec = /home/pringle/bin/ob-tile.sh -G
+menu-0-2 = Horiz
+menu-0-2-foreground = #fff
+menu-0-2-exec = /home/pringle/bin/ob-tile.sh -H
+menu-0-3 = Vert
+menu-0-3-foreground = #fff
+menu-0-3-exec = /home/pringle/bin/ob-tile.sh -V
+
+menu-1-0 = Cancel
+menu-1-0-foreground = #fff
+menu-1-0-exec = menu_open-0
+menu-1-1 =  
+menu-1-1-foreground = #fff
+menu-1-1-exec = /home/pringle/bin/ob-tile.sh -H
+menu-1-2 = 
+menu-1-2-foreground = #fff
+menu-1-2-exec = /home/pringle/bin/ob-tile.sh -G
+menu-1-3 =  
+menu-1-3-foreground = #fff
+menu-1-3-exec = /home/pringle/bin/ob-tile.sh -V
+menu-1-4-foreground = #fff
+menu-1-4-exec = menu_open-0
+
+
+menu-2-0 =  
+menu-2-0-foreground = #fff
+menu-2-0-exec = /home/pringle/bin/ob-tile.sh -V
+menu-2-1 = Cancel
+menu-2-1-foreground = #fff
+menu-2-1-exec = menu_open-0
+
+
+
+[module/menu-apps]
+type = custom/menu
+
+label-open =  
+label-close = 
+label-separator = |
+label-seperator-color = #FF4081
+label-forground-color = #547FFF
+format-padding = 3
+
+menu-0-0 = Xterm
+menu-0-0-foreground = #38BF8F
+menu-0-0-exec = xterm
+menu-0-1 = UI
+menu-0-1-foreground = #387DBF
+menu-0-1-exec = menu-open-1
+menu-0-2 = Apps
+menu-0-2-foreground = #387DBF
+menu-0-2-exec = menu-open-2
+
+menu-1-0 = Cancel
+menu-1-0-foreground = #EC5F67
+menu-1-0-exec = menu-open-0
+menu-1-1 = Gcolor2
+menu-1-1-foreground = #35AAE9
+menu-1-1-exec = gcolor2
+menu-1-2 = LXappearance
+menu-1-2-foreground = #35AAE9
+menu-1-2-exec = lxappearance
+menu-1-3 = GTKetc
+menu-1-3-foreground = #35AAE9
+menu-1-3-exec = wpgtk
+
+menu-2-0 = Terminal
+menu-2-0-foreground = #35E9B6
+menu-2-0-exec = xfce4-terminal
+menu-2-1 = Browser
+menu-2=1-foreground = #35E9B6
+menu-2-1-exec = vivaldi-snapshot
+menu-2-2= Kodi
+menu-2-2-foreground = #35E9B6
+menu-2-2-exec = kodi
+menu-2-3 = Cancel
+menu-2-3-foreground = #EC5F67
+
+[modules/xmenu]
+type = custom/xmenu
+
+label-open =  ...
+label-close = x
+
+menu-0 = item 1;command
+menu-0-0 = sub-item 1.1;command
+menu-0-1 = sub-item 1.2;command
+menu-0-2 = sub-item 1.3;command
+menu-1 = item 2;command
+menu-1-0 = sub-item 2.1;command
+menu-1-1 = sub-item 2.2;command
+
+[module/ewmh]
+type = internal/xworkspaces
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; Create click handler used to focus desktop
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle desktops
+; Default: true
+enable-scroll = true
+
+; icon-[0-9]+ = <desktop-name>;<icon>
+; NOTE: The desktop name needs to match the name configured by the WM
+; You can get a list of the defined desktops using:
+; $ xprop -root _NET_DESKTOP_NAMES
+icon-0 = code;♚
+icon-1 = office;♛
+icon-2 = graphics;♜
+icon-3 = mail;♝
+icon-4 = web;♞
+icon-default = 
+
+; Available tags:
+;   <label-monitor>
+;   <label-state> - gets replaced with <label-(active|urgent|occupied|empty)>
+; Default: <label-state>
+format = <label-state>
+
+; Available tokens:
+;   %name%
+; Default: %name%
+label-monitor = %name%
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%
+label-active = 
+label-active-foreground = #38BF8F
+label-active-background = #0A0D15
+label-active-underline = #ffffff
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-occupied = %icon%
+label-occupied-underline = #555555
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon
+%  %name%
+label-urgent = 
+label-urgent-foreground = #37A7B8
+label-urgent-background = #bd2c40
+label-urgent-underline = #9894B8
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-empty = 
+label-empty-foreground = #55
+
+[module/config]
+type = custom/script
+exec = /home/pringle/bin/current_config
+interval = 1
+
+label = %output%
+label-padding-left = 2
+format = "<label>"
+format-prefix = ...
+format-prefix-padding-left = 3
+format-prefix-font = 2
+format-prefix-foreground = #ffffff
+
+click-left = /home/pringle/go/bin/gorice dump i3 /home/pringle/.gorice/output.yaml.template; /home/pringle/bin/config_ui
+click-middle = /home/pringle/go/bin/gorice dump .i3 /home/pringle/.gorice/output.yaml.template; /home/pringle/bin/config_ui
+click-right = xfce4-terminal -e 'env PROMPT_COMMAND="unset PROMPT_COMMAND; gorice edit i3/current; exit"; bash'
+
+[module/gmail]
+type = custom/script
+exec = ~/.config/polybar/gmail/launch.py
+tail = true
+click-left = xdg-open https://mail.google.com
+format-prefix = 📧
+format-prefix-foreground = #ffffff
+
+
+[module/focus]
+
+type = custom/script
+interval = 0.1
+
+format = <label>
+
+label = "%output% "
+label-font = 5
+label-padding = 1
+
+format-background = #060E16
+format-foreground = #8FBCBB
+
+exec = /home/pringle/.config/polybar/focused.py
+
+
+[module/pipe]
+type = custom/text
+content = "|"
+content-background = #0A0D15
+content-foreground = #0A0D15
+content-padding = 1
+
+[module/mail]
+type = custom/script
+interval = 10
+format = <label>
+label =  
+click-left = xdg-open https://mail.google.com
+exec = /home/pringle/bin/notify
+
+[module/rofi]
+type = custom/script
+exec = echo ""
+click-left = rofi-launcher
+
+[module/pkg]
+type = custom/script
+label-foreground = #387DBF
+exec = ~/.config/polybar/pkg.sh
+click-left = ~/.config/polybar/update.sh
+click-right = ~/.config/polybar/aur-update.sh
+
+
+[module/menu]
+type = custom/menu
+
+format-spacing = 1
+label-open = "  "
+label-open-foreground = #ffffff
+label-closed-background = #FAFDFF
+label-close = "  "
+label-close-foreground = #00BCD4
+label-separator = "│"
+label-separator-foreground = #FF4081
+menu-0-0 = Top
+menu-0-0-exec = menu-open-1
+menu-0-1 = Extra
+menu-0-1-exec = menu-open-2
+menu-0-2 = Music
+menu-0-2-exec = menu-open-3
+menu-0-3 = Power
+menu-0-3-exec = menu-open-4
+
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch thunar
+menu-1-3 = "  "
+menu-1-3-exec = subl3
+
+menu-2-0 = "  "
+menu-2-0-exec = gimp-2.8
+menu-2-1 = "  "
+menu-2-1-exec = spotify --force-device-scale-factor=1.5
+menu-2-2 = "  "
+menu-2-2-exec = deluge
+menu-2-3 = "  "
+menu-2-3-exec = claws-mail
+menu-2-4 = "  "
+menu-2-4-exec = steam-runtime
+menu-2-5 = "  "
+menu-2-5-exec = scrot %F-%S_$wx$h_scrot.png -e 'mv $f ~/images'
+
+menu-3-0 = "  "
+menu-3-0-exec = audacious &
+menu-3-1 = "  "
+menu-3-1-exec = playerctl previous
+menu-3-2 = "  "
+menu-3-2-exec = playerctl stop
+menu-3-3 = "  "
+menu-3-3-exec = playerctl play-pause
+menu-3-4 = "  "
+menu-3-4-exec = playerctl next
+
+menu-4-0 = "  "
+menu-4-0-exec = slimlock
+menu-4-1 = "  "
+menu-4-1-exec = systemctl reboot
+menu-4-2 = "  "
+menu-4-2-exec = systemctl poweroff
+
+[module/gplus]
+type = custom/text
+content = 
+content-foreground = ${colors.foreground}
+click-left = ice-firefox google+
+
+[module/notify]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = ">> "
+format-prefix-foreground = #d93257
+;format-underline = #c38159
+exec = /home/pringle/bin/notify
+
+[module/redshift]
+type = custom/script
+interval = 5
+format-prefix = #d93257
+label = 
+exec = /home/pringle/.config/polybar/redshift.sh
+
+[module/pavolume]
+type = custom/script
+interval = 2
+label = %output%
+exec = ~/.config/polybar/pavolume.sh
+click-right = exec pavucontrol
+click-left = ~/.config/polybar/pavolume.sh --togmute
+scroll-up = ~/.config/polybar/pavolume.sh --up
+scroll-down = ~/.config/polybar/pavolume.sh --down
+
+[module/compton]
+type = custom/script
+
+exec = ~/.config/polybar/compton.sh
+click-left = ~/.config/polybar/compton-toggle.sh
+interval = 5
+
+[module/reddit]
+type = custom/script
+interval = 10
+format = <label>
+label = 
+click-left = xdg-open https://www.reddit.com
+exec = /home/pringle/.config/polybar/reddit.py
+
+[module/mpd2]
+type                  = internal/mpd
+label-song            = %artist% - %title%
+label-song-maxlen     = 65
+label-song-ellipsis   = true
+format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-random> <label-song> <bar-progress>
+label-song-foreground = ${colors.foreground}
+label-padding = 1
+label-song-background = ${colors.background}
+icon-pause-background = ${self.label-song-background}
+icon-play-background  = ${self.label-song-background}
+icon-pause-foreground = ${self.label-song-foreground}
+icon-stop-foreground = ${self.label-song-foreground}
+icon-play-foreground  = ${self.label-song-foreground}
+label-song-padding = 1
+icon-prev  = ""
+icon-stop  = ""
+icon-pause = ""
+icon-play  = ""
+icon-next  = ""
+icon-random = ""
+toggle-off-foreground = ${colors.foreground}
+toggle-on-foreground  = ${colors.red}
+bar-progress-width = 20
+bar-progress-indicator = 
+bar-progress-fill = 
+bar-progress-empty = 
+bar-progress-fill-foreground = ${colors.foreground}
+bar-progress-indicator-foreground = ${colors.red}
+
+[module/gcolor]
+type = custom/text
+content =
+content-foreground = #ffffff
+click-left = gcolor2
+
+[module/vivaldi]
+type = custom/text
+content =
+content-foreground = #ffffff
+click-left = exo-open --launch WebBrowser &
+
+
+[module/fm]
+type = custom/text
+content = 
+content-foreground = #ffffff
+click-left = thunar &
+click-right = gksu thunar &
+
+[module/scrot]
+type = custom/text
+content =
+content-foreground = #ffffff
+click-left = scrot %F-%S_$wx$h_scrot.png -e 'mv $f ~/scrot' &
+
+[module/term]
+type = custom/text
+content = 
+content-foreground = #ffffff
+click-left = xfce4-terminal &
+click-right = gksu xfce4-terminal &
+
+[module/clip]
+type = custom/text
+content = 
+content-foreground = #ffffff
+click-left = diodon
+
+[module/editor]
+type = custom/text
+content = 
+content-foreground = #ffffff
+click-left = subl3 &
+click-right = geany &
+
+[module/spotify]
+type = custom/text
+content = 
+content-foreground = #23B37A
+click-left = spotify --force-device-scale-factor=1.5 
+
+[module/seperator]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+
+
+
+
+[module/email]
+type = custom/text
+content = 
+content-foreground = ${colors.foreground}
+click-left = claws-mail &
+
+
+; vim:ft=dosini

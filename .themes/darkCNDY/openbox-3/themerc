@@ -1,0 +1,76 @@
+darkCNDY by Duncan
+
+------------------------------------------------------------------
+
+# Menu
+menu.title.bg: flat
+menu.title.bg.color: #22354D
+menu.title.text.color: #22354D
+menu.title.text.justify: left
+
+menu.items.bg: Flat
+menu.items.bg.color: #1c2223
+menu.items.text.color: #f1f1f1
+menu.items.justify: left
+menu.items.disabled.text.color: #d7d7d7
+menu.bullet.image.color: #202021
+
+menu.items.active.bg: Flat
+menu.items.active.bg.color: #e62d63
+menu.items.active.text.color: #FFFFFF
+menu.bullet.selected.image.color: #ffffff
+
+menu.overlap.x: -7
+
+# Active Window
+
+window.active.title.bg: focus: flat
+window.active.title.bg.color: #14181C
+
+window.active.label.bg: parentrelative
+window.active.label.text.color:  #14181C
+window.label.text.justify: left
+
+window.active.button.unpressed.bg: parentrelative
+window.active.button.unpressed.image.color: #1C2223
+window.active.button.toggled.image.color: #FFFFFF
+window.active.button.pressed.bg: parentrelative
+
+window.active.button.disabled.bg: parentrelative
+window.active.button.disabled.image.color: #19744e
+window.active.handle.bg: flat
+window.active.handle.bg.color: #02b067
+window.active.grip.bg: flat
+window.active.grip.bg.color: #02b067
+
+
+
+# Inactive Window
+
+window.inactive.title.bg: flat
+window.inactive.title.bg.color: #14181C
+window.inactive.label.bg: parentrelative
+window.inactive.label.text.color: #14181C
+
+window.inactive.button.unpressed.bg: parentrelative
+window.inactive.button.unpressed.image.color: #292A14181C2B
+window.inactive.button.pressed.bg: parentrelative
+window.inactive.button.pressed.bg.color: #ffffff
+window.inactive.button.disabled.bg: parentrelative
+window.inactive.button.disabled.image.color: #19744e
+window.inactive.handle.bg: flat
+window.inactive.handle.bg.color: #6dd96c
+window.inactive.grip.bg: flat
+window.inactive.grip.bg.color: #6dd96c
+
+# Fontstuff
+window.active.label.text.font: Bitstream Vera Sans:bold:size=6
+window.inactive.label.text.font: Bitstream Vera Sans:bold:size=6
+menu.items.font:  Trebuchet Ms:size=6
+menu.title.text.font: Trebuchet Ms:bold:size=6
+
+# Shitmix
+padding.width: 4
+padding.height: 6
+window.handle.width: 0
+window.client.padding.width: 0

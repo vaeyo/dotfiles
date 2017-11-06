@@ -1,0 +1,738 @@
+; theme: orange
+; author: nvnehi
+; website: http://nnh.io
+;
+; requires:
+;   i3, playerctl
+;   fonts: font awesome, source code pro or bitocra
+;
+; toggled on/off:
+;   fonts
+;   tray
+;
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[colors]
+background = #0B1219
+foreground = #007086
+foreground-alt = #FF41CE
+highlight = #eeeeee
+secondary = #3BD6FF
+#F5166A
+
+[spacing]
+padding = 4
+
+[bar/default]
+monitor = eDP1
+width = 100%
+height = 30
+background = ${colors.background}
+foreground = ${colors.foreground}
+border-bottom-size = 1
+;border-bottom-color = #F5166A
+;border-bottom-color = #EF8AA1
+border-bottom-color = #006CA5
+font-0 = FontAwesome:size=7
+;font-1 = source code pro:size=8:antialias=true
+font-1 = bitocra:antialias=false
+font-2 = MaterialIcons:size=10:antialias=false;2
+font-3 = fontawesome:size=9;1
+modules-left = pipe2 arch seperator4 padding6 workspaces window_count seperator  rofi  hide taskwarrior
+modules-center =   seperator3    previous play next padding9
+;modules-center = mpd  seperator3  spotipy previous next padding9 weather reload weather
+modules-right = up down seperator3  cpu memory filesystem temperature workspace pipe redshift volume network date powermenu
+module-margin-left = 0
+module-margin-right = 0
+;tray-position = right
+;tray-padding = ${spacing.padding}
+;tray-transparent = true
+;tray-background = ${colors.background}
+;tray-maxsize = 14
+padding-left = 0
+padding-right = 0
+
+[module/i3]
+type = internal/i3
+index-sort = true
+wrapping-scroll = false
+format-padding = ${spacing.padding}
+format-foreground = ${colors.background}
+format-background = ${colors.foreground}
+format = "      <label-state> <label-mode>"
+;label-focused = "%index%"
+label-focused = 
+;label-focused-foreground = ${colors.highlight}
+label-focused-padding = 2
+;label-unfocused = "%index%"
+label-unfocused = 
+;label-unfocused-foreground = ${colors.background}
+label-unfocused-padding = 2
+label-urgent = %index%
+
+[module/xwindow]
+type = internal/xwindow
+format-padding = ${spacing.padding}
+label = "    %title%"
+label-maxlen = 150
+
+[module/mpd]
+type = internal/mpd
+format-online-foreground = ${colors.background}
+format-online-background = ${colors.foreground}
+format-online-padding = ${spacing.padding}
+format-online = "%{A1:playerctl play-pause:}%{A4:playerctl previous:}%{A5:playerctl next:}    <label-song>%{A}%{A}%{A}"
+label-song-maxlen = 150
+label-song-ellipsis = true
+
+[module/pkg]
+type = custom/script
+label-foreground = #EFC8AA
+label-background = 1E232B
+exec = $HOME/.config/polybar/scripts/pkg.sh
+exec-if = "ping -c 1 8.8.8.8 > /dev/null"
+click-left = $HOME/.config/polybar/scripts/update.sh
+click-right = $HOME/.config/polybar/scripts/aur-update.sh
+label-padding = 0
+interval = 1500
+tail = true
+format-underline = #95B0C7
+format-padding = 1
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = "  "
+format-prefix-foreground = #7A7A7A
+label-foreground = #ffffff
+exec = ~/.config/polybar/weather
+format-padding = 2
+
+[module/redshift]
+type = custom/script
+interval = 5
+label-foreground = #ffffff
+label = 
+exec = /home/pringle/.config/polybar/redshift.sh
+format-padding = 1
+
+[module/redshiftChecker]
+type = custom/script
+interval = 600
+format = <label>
+exec = ~/.config/polybar/redshift.sh &>/dev/null
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "    "
+format-padding = ${spacing.padding}
+format-foreground = #ffffff
+label =  %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "    "
+format-padding = ${spacing.padding}
+format-foreground = #ffffff
+label = %percentage_used%%
+;
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+format-prefix = "   "
+mount-0 = /
+format-mounted-padding = ${spacing.padding}
+label-mounted = "     %free%"
+label-unmounted = "     not mounted"
+format-foreground = #ffffff
+
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 2
+warn-temperature = 80
+ramp-0 = "    "
+ramp-1 = "    "
+ramp-2 = "    "
+format = <ramp> <label>
+format-foreground = #FF41CE
+format-warn = <ramp> <label-warn>
+format-padding = ${spacing.padding}
+format-warn-padding = ${spacing.padding}
+label = %temperature%
+label-warn-foreground = ${colors.highlight}
+label-warn = HOT!  %temperature%
+
+[module/volume]
+type = internal/volume
+label-volume-foreground = #ffffff
+label-volume-background = ${colors.foreground}
+label-volume-padding = ${spacing.padding}
+label-volume = "     %percentage%%"
+label-muted-padding = ${spacing.padding}
+label-muted = "       %percentage%%"
+format-padding = 1
+
+[module/battery]
+type = internal/battery
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = %{F#ffffff}%{F#F5166A}  <label-full>
+format-padding = 1
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = #66c6b8e6
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-foreground = #FFB6A1
+animation-charging-framerate = 750
+
+[module/date]
+type = internal/date
+interval = 5
+date =
+date-alt = "  %m/%d/%y,"
+time = "%l:%M %p"
+time-alt = "%l:%M %p"
+format-padding = ${spacing.padding}
+format-prefix = "    "
+format-foreground = #ffffff
+format-background = ${colors.foreground}
+label = %date% %time%
+
+[module/powermenu]
+type = custom/menu
+label-open = 
+label-open-foreground = ${colors.background}
+label-open-background = ${colors.foreground}
+label-open-padding-left = 2
+label-open-padding-right = 4
+label-close-foreground = ${colors.background}
+label-close-background =  ${colors.foreground}
+label-close-padding = ${spacing.padding}
+label-close = 
+label-separator = " │ "
+
+format = <label-toggle><menu>
+
+menu-0-0 = " favorite"
+menu-0-0-exec = menu-open-1
+menu-0-1 = " visual"
+menu-0-1-exec = menu-open-2
+menu-0-2 = " executibles" "
+menu-0-2-exec = menu-open-3
+menu-0-3 = " music"
+menu-0-3-exec = menu-open-4
+
+menu-1-0 = "  "
+menu-1-0-exec = vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = catfish &
+menu-1-4 = "  "
+menu-1-4 exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = lxappearance &
+menu-2-3 = "  "
+menu-2-3-exec = gcolor2 &
+menu-2-4 = "  "
+menu-2-4 exec = wpg
+
+menu-3-0 = "  "
+menu-3-0-exec = termite --geometry=600x500 --exec=ncmpcpp &
+menu-3-1 = "   "
+menu-3-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-3-2 = "  "
+menu-3-2-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+menu-3-3 = "  "
+menu-3-3-exec = /home/pringle/.config/polybar/reload
+menu-3-4 = "  "
+menu-3-4 exec = menu_open-0
+
+menu-4-0 = "   "
+menu-4-0-exec = playerctl -p spotify status
+menu-4-1 = "   "
+menu-4-1-exec = playerctl pause
+menu-4-2 = "  "
+menu-4-2-exec = playerctl previous
+menu-4-3 = "  "
+menu-4-3-exec = playerctl next
+menu-4-4 = "  "
+menu-4-4exec = playerctl stop
+menu-4-5 = "  "
+menu-4-5 exec = mpd
+
+
+; 
+
+;
+;
+;
+;      
+; 
+;      
+
+[module/hide]
+interval = 30
+type = custom/script
+exec = /home/pringle/.config/polybar/hide.sh
+label =   hide
+format-foreground = #FFF
+format-padding = 1
+
+[module/arch]
+type = custom/text
+content = " Applications  "
+click-left = exec /home/pringle/.config/polybar/pymenu.py
+content-foreground = #F5166A
+
+[module/spotify]
+type = custom/script
+format-label = 
+exec = sh ~/.config/polybar/spotify
+interval = 1
+format-padding = 1
+
+[module/spotipy]
+type = custom/script
+exec =  python3 ~/scripts/spoti.py
+exec-if = pgrep spotify > /dev/null
+interval = 0.01
+click-left = playerctl -p spotify play-pause
+format-background = #0B1219
+format-padding = 2
+
+
+
+[module/padding]
+type = custom/text
+content = │
+content-foreground = #EFAAB9
+content-background = #0B1219
+
+[module/padding2]
+type = custom/text
+content = │
+content-foreground = #EFAAB9
+content-background = #0B1219
+
+[module/padding3]
+type = custom/text
+content = │
+content-foreground = #EFAAB9
+content-background = #0B1219
+
+[module/padding4]
+type = custom/text
+content = │
+content-foreground = #EFAAB9
+content-background = #0B1219
+
+
+
+[module/padding5]
+type = custom/text
+content = │
+content-foreground = #EFAAB9
+content-background = #0B1219
+
+[module/padding6]
+type = custom/text
+content = │
+content-foreground = #EFAAB9
+content-background = #0B1219
+
+[module/padding9]
+type = custom/text
+content = │
+content-foreground = #EFAAB9
+content-background = #0B1219
+
+[module/padding10]
+type = custom/text
+content = │
+content-foreground = #F5166A
+content-background = #0B1219
+
+[module/padding7]
+type = custom/text
+content = │
+content-foreground = #EFAAB9
+content-background = #0B1219
+
+[module/padding8]
+type = custom/text
+content = │
+content-foreground = #F5166A
+content-background = #0B1219
+
+[module/seperator5]
+type = custom/text
+content =|│
+content-foreground = #FFB6A1
+
+[module/seperator4]
+type = custom/text
+content =|
+content-foreground = #FF41CE
+
+[module/seperator3]
+type = custom/text
+content =|│
+content-foreground = #ffffff
+
+[module/seperator2]
+type = custom/text
+content =|│
+content-foreground = ##F5166A
+
+[module/seperator]
+type = custom/text
+content =|│
+content-foreground = #FFB6A1
+
+[module/pipe]
+type = custom/text
+content = "|"
+content-background = #0B1219
+content-foreground = #0B1219
+content-padding = 1
+
+[module/pipe2]
+type = custom/text
+content = "|"
+content-background = #0B1219
+content-foreground = #85C3DE
+content-padding = 2
+
+[module/pipe3]
+type = custom/text
+content = "|"
+content-background = #0B1219
+content-foreground = #85C3DE
+content-padding = 3
+
+
+
+[module/playpause]
+type = custom/script
+exec = /home/pringle/.config/polybar/playpause.py
+interval = 0.01
+click-left = playerctl -p spotify play-pause
+format-foreground = #ffffff
+format-background = #0B1219
+format-padding = 2
+
+[module/play]
+type = custom/script
+format-text = <label>
+label = 
+exec = echo label
+click-left = exec playerctl play
+format-foreground = #ffffff
+format-background = #0B1219
+format-padding = 2
+
+[module/previous]
+type = custom/script
+format-text = <label>
+label = 
+exec = echo label
+click-left = exec playerctl previous
+format-foreground = #ffffff
+format-background = #0B1219
+format-padding = 2
+
+[module/next]
+type = custom/script
+format-text = <label>
+label = 
+exec = echo label
+click-left = exec playerctl next
+format-foreground = #ffffff
+format-background = #0B1219
+format-padding = 2
+;
+
+[module/window_count]
+type = custom/script
+interval = 1
+label = %{A1:skippy-xd --toggle-window-picker:}   %output%  %{A}
+exec = echo "$(($(wmctrl -l -i | wc -l)-1))"
+format = <label>
+format-prefix = " tasks "
+format-prefix-foreground = #F5166A
+format-padding = 1
+label-foreground = #FF41CE
+
+[module/rofi]
+type = custom/script
+exec = echo " rofi"
+click-left = rofi-apps
+label-foreground = #ffffff
+label-background = #0B1219
+format-padding = 1
+label-prefix = rofi
+
+[module/network]
+type = custom/script
+label-background = #F5166A
+exec = $HOME/.config/polybar/scripts/network.sh
+click-left = networkmanager_dmenu
+click-right = networkmanager_dmenu
+label-padding = 1
+interval = 1
+tail = true
+
+[module/taskwarrior]
+interval = 30
+type = custom/script
+exec = /home/pringle/.config/polybar/task_polybar.sh
+format = <label>
+format-foreground = #FFF
+format-prefix = " "
+click-left = task "$((`cat /tmp/tw_polybar_id`))" done
+
+
+[module/workspaces]
+type = internal/xworkspaces
+enable-click = true
+enable-scroll = true
+format-padding = 1
+Additional formatting
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+;icon-default = 
+
+;
+
+format = <label-state>
+label-monitor =  %name%
+
+label-active = " %icon% %name% "
+label-active-foreground = #F5166A
+label-active-background = #007086
+label-active-underline = #F5166A
+
+label-occupied = " %icon% %name% "
+label-occupied-underline = #EFC8AA
+label-occupied-background = #1E232B
+label-occupied-foreground = #34C8BC
+
+label-urgent = " %icon% %name% "
+label-urgent-foreground = #ffffff
+label-urgent-background = #007086
+label-urgent-underline = #34C8BC
+
+label-empty = " %icon% %name% "
+label-empty-foreground = #ffffff
+
+[module/workspace]
+type = custom/script
+interval = 1
+label = %{A4:wmctrl -s "$(($(xprop -root _NET_CURRENT_DESKTOP | cut -d '=' -f 2 | cut -d ' ' -f 2)+1))":}%{A5:wmctrl -s "$(($(xprop -root _NET_CURRENT_DESKTOP | cut -d '=' -f 2 | cut -d ' ' -f 2)-1))":}%output% %{A}%{A}
+exec = echo "$(($(xprop -root _NET_CURRENT_DESKTOP | cut -d '=' -f 2 | cut -d ' ' -f 2)+1))"
+label-background = #0B1219
+label-foreground = #13181D
+format = <label>
+;format-prefix = " "
+format-prefix-foreground = #F5166A
+
+[module/menu]
+type = custom/menu
+
+format-spacing = 1
+label-open = "  "
+label-open-foreground = #ffffff
+label-closed-background = #FAFDFF
+label-close = "  "
+label-close-foreground = #BA386F
+label-separator = "│"
+label-separator-foreground = #F9987D
+menu-0-0 = Most Used
+menu-0-0-exec = menu-open-1
+menu-0-1 = Ricing
+menu-0-1-exec = menu-open-2
+menu-0-2 = Media
+menu-0-2-exec = menu-open-3
+menu-0-3 = 
+menu-0-3-exec = menu-open-4
+
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch thunar
+menu-1-3 = "  "
+menu-1-3-exec = atom
+
+menu-2-0 = "  "
+menu-2-0-exec = gcolor2
+menu-2-1 = "  "
+menu-2-1-exec = spotify --force-device-scale-factor=1.5
+menu-2-2 = "  "
+menu-2-2-exec = wpg
+menu-2-3 = "  "
+menu-2-3-exec = yakyak
+menu-2-4 = "  "
+menu-2-4-exec = lxappearance
+menu-2-5 = "  "
+menu-2-5-exec = scrot %F-%S_$wx$h_scrot.png -e 'mv $f ~/images'
+
+menu-3-0 = "  "
+menu-3-0-exec = audacious &
+menu-3-1 = "  "
+menu-3-1-exec = playerctl stop
+menu-3-2 = "  "
+menu-3-2-exec = playerctl previous
+menu-3-3 = "  "
+menu-3-3-exec = playerctl play-pause
+menu-3-4 = "  "
+menu-3-4-exec = playerctl next
+
+menu-4-0 = "  "
+menu-4-0-exec = slimlock
+menu-4-1 = "  "
+menu-4-1-exec = systemctl reboot
+menu-4-2 = "  "
+menu-4-2-exec = systemctl poweroff
+
+[module/workspace-box]
+type = internal/i3
+format = <label-state><label-mode>
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+enable-click = true
+enable-scroll = false
+wrapping-scroll = false
+reverse-scroll = false
+fuzzy-match = true
+label-mode-padding = 1
+label-mode = %mode%
+label-mode-foreground = ${colors.foreground}
+label-mode-background = ${colors.background}
+label-focused = ""
+label-focused-foreground = ${colors.foreground}
+label-focused-background = ${colors.background}
+label-focused-padding = 1
+label-unfocused = ""
+label-unfocused-foreground = ${colors.foreground}
+label-unfocused-background = #f76d47
+label-unfocused-padding = 1
+label-urgent = ""
+label-urgent-foreground = ${colors.red}
+label-urgent-background = #f76d47
+label-urgent-padding = 1
+label-visible = ""
+label-visible-foreground = ${colors.foreground}
+label-visible-background = $#f76d47
+label-visible-padding = 1
+
+[module/scrot]
+type = custom/text
+content =" " ""
+content-foreground = #ffffff
+;click-left = scrot %F-%S_$wx$h_scrot.png -e 'mv $f ~/scrot' &
+click-right = scrot %F-%S_$wx$h_scrot.png -e 'mv $f /home/pringle/Dropbox'' &
+click-left = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+format-padding = 1
+
+
+[module/reddit]
+type = custom/script
+interval = 10
+format = <label>
+exec = ~/.config/polybar/reddit.sh
+click-left = xdg-open https://reddit.com/message/unread
+format-module-margin = 3
+format-padding = 1
+
+; 
+
+
+[module/reload]
+type = custom/script
+exec = echo " reload"
+;exec = /home/pringle/.config/polybar/reload
+click-left = exec /home/pringle/.config/polybar/reload
+label-foreground = #ffffff
+label-background = #0B1219
+format-prefix = reload
+format-padding = 3
+
+[module/down]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+ping-interval = 10
+
+format-prefix = "  "
+format-connected =  <label-connected>
+format-connected-foreground = #C7FFD2
+format-connected-underline =  #85DEBF
+format-packetloss =  <label-connected>
+format-packetloss-foreground = #F5166A
+format-packetloss-underline = #F5166A
+format-disconnected = -
+format-disconnected-foreground = #7A7A7A
+label-connected = %downspeed%
+format-padding = 1
+
+[module/up]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+ping-interval = 10
+
+
+format-prefix = "  "
+format-connected = <label-connected>
+format-connected-foreground = #D9FFEA
+format-connected-underline = #85DEBF
+format-packetloss = <label-connected>
+format-packetloss-foreground = #C40C84
+format-packetloss-underline = #F5166A
+format-disconnected =  -
+format-disconnected-foreground = #7A7A7A
+label-connected = %upspeed%
+format-padding = 1
+
+; 
+;           
+;
+;
+;

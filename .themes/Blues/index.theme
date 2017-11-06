@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Blues
+Comment=Life of the party, but I'm dead inside.
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+Name=Blues
+GtkTheme=Blues
+IconTheme=Blues
+MetacityTheme=Blues

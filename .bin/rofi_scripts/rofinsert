@@ -1,0 +1,50 @@
+#! /usr/bin/env zsh
+
+# Expansions directory constant
+EXPANSIONS_DIR=~/.local/share/expansions
+# What dmenu to use
+DMENU=(rofi -dmenu -p expand:)
+
+# Get list of expansions
+[ -d $EXPANSIONS_DIR ] || exit 1
+expansions=($EXPANSIONS_DIR/**/*(.))
+expansions=(${expansions[@]#$EXPANSIONS_DIR/})
+
+# Save current window focus
+current_window=$(xdotool getwindowfocus)
+
+# Get choice, if it's null we exit
+choice=$(printf '%s\n' ${expansions[@]} | $DMENU)
+[[ -z $choice ]] && exit
+
+# Restore focus to current window
+xdotool windowfocus $current_window
+
+# Anonymous function for handling clipboards
+function {
+    type-arg() {
+        local type="$(file -b --mime-type $1)"
+        if [[ $type != "text/plain" ]]; then
+            printf '-t %s' $type
+        fi
+    }
+
+    # Save the contents of the clipboards to the anonymous files
+    xclip -selection primary -o > $1
+    xclip -selection clipboard -o > $2
+
+    local file="$EXPANSIONS_DIR/$choice"
+
+    # Copy expansion to clipboards
+    xclip -selection primary -i $file $(type-arg $file) -r
+    xclip -selection clipboard -i $file $(type-arg $file) -r
+
+    # Paste clipboard
+    xdotool key --clearmodifiers Shift+Insert
+
+    # Restore clipboards from variables
+    xclip -selection primary -i $1 $(type-arg $1)
+    xclip -selection clipboard -i $2 $(type-arg $2)
+
+# Call anonymous function with file handles for the contents of the clipboards
+} =() =()

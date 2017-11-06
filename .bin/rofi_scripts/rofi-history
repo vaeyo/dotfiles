@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+# author: tfinnell
+# description: modi for zsh command history, selection copies
+#              the command as a selection (shift-insert will output)
+
+if [[ -z $@ ]]; then
+  HISTFILE=~/.zsh_history
+  fc -R
+  fc -r -l 2000
+else
+  echo "$@" | awk '!($1="")' | xsel -i
+fi

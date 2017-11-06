@@ -1,0 +1,936 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;         Fonts you may want                       ;;;;;;;;
+;;;;;;;;      --- ttf-font-awesome                        ;;;;;;;;
+;;;;;;;;      --- ttf-material-icons                      ;;;;;;;;
+;;;;;;;;      --- nerd-fonts-complete                     ;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;             Colours
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+[colors]
+background = #091119
+foreground = #FFFFFF
+urgent     = #BA386F
+blue       = #159E98
+b-alt      = #121519
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;              Bars
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+compositing-background = over
+compositing-foreground = source
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+[bar/bar1]
+; Use  xrandr -q | grep " connected" | cut -d ' ' -f1
+; for a list of connected monitors
+monitor = HDMI-2
+monitor-strict = false
+override-redirect = false
+width = 100%
+height = 24
+offset-x = 0
+offset-y = 0
+fixed-center = true
+border-bottom-size = 0
+border-bottom-color = ${colors.background}
+border-top-size = 0
+border-top-color = ${colors.background}
+background = #EEEEEE
+foreground = #091119
+font-0 = Ubuntu Nerd Font:size=13:antialias=false;2
+font-1 = FontAwesome:pixelsize=12:antialias=false;2
+font-2 = MaterialIcons:size=12:antialias=false;2
+font-3 = Fira Sans:size=12:weight=regular;2
+
+modules-left = workspaces rofi menu window_count
+modules-center = mpd
+modules-right = pkg compton memory cpu temp time seperator
+
+module-margin = 1
+padding-right = 0
+padding-left = 0
+bottom = false
+underline-size = 2
+tray-position = right
+tray-padding = 10
+tray-background = ${colors.background}
+tray-offset-x = 10%
+tray-offset-y = 0
+
+[bar/bottom]
+monitor = eDP1
+monitor-strict = false
+override-redirect = false
+width = 100%
+height = 29
+offset-x = 0
+offset-y = 0
+fixed-center = true
+border-bottom-size = 0
+border-bottom-color = ${colors.background}
+border-top-size = 0
+border-top-color = ${colors.background}
+background = ${colors.background}
+foreground = ${colors.foreground}
+font-0 = Ubuntu Nerd Font:size=10:antialias=false;2
+font-1 = FontAwesome:pixelsize=12:antialias=false;2
+font-2 = MaterialIcons:size=10:antialias=false;2
+font-3 = Futura:size=10:weight=Light;2
+font-5 = Futura:size=10:weight=Light;2
+font-4 = Futura:size=10:weight=Light;2
+
+
+modules-left =  menu
+modules-center = mpd
+modules-right =      pkg seperator3 redshift compton seperator4 cpu
+
+module-margin = 1
+padding-right = 0
+padding-left = 0
+bottom = true
+underline-size = 2
+tray-position = false
+tray-padding = 10
+tray-background = ${colors.background}
+tray-offset-x = 10%
+tray-offset-y = 0
+
+
+
+[bar/bar2]
+; Use  xrandr -q | grep " connected" | cut -d ' ' -f1
+; for a list of connected monitors
+monitor = eDP1
+monitor-strict = false
+override-redirect = false
+width = 100%
+height = 29
+offset-x = 0
+offset-y = 0
+fixed-center = true
+border-bottom-size = 0
+border-bottom-color = ${colors.background}
+border-top-size = 0
+border-top-color = ${colors.background}
+background = ${colors.background}
+foreground = ${colors.foreground}
+font-0 = Ubuntu Nerd Font:size=10:antialias=false;2
+font-1 = FontAwesome:pixelsize=12:antialias=false;2
+font-2 = MaterialIcons:size=10:antialias=false;2
+font-3 = Futura:size=10:weight=Light;2
+font-5 = Futura:size=10:weight=Light;2
+font-4 = Futura:size=10:weight=Light;2
+
+
+modules-left = workspaces rofi reload powermenu
+modules-center = weather padding mpd
+modules-right = network seperator2 window_count padding3 update padding2 xbacklight volume seperator  wlan time pipe
+
+module-margin = 1
+padding-right = 0
+padding-left = 0
+bottom = false
+underline-size = 2
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;              Modules
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+[module/rofi]
+type = custom/script
+exec = echo "  "
+click-left = rofi-apps
+label-foreground = ${colors.foreground}
+label-background = ${colors.b-alt}
+format-padding = 3
+
+
+
+[module/temp]
+type = internal/temperature
+interval = 3
+thermal-zone = 0
+warn-temp = 70
+format = <label>
+format-padding = 0
+label-foreground = ${colors.foreground}
+label-background = ${colors.b-alt}
+label-warn-foreground = ${colors.urgent}
+label = "  %temperature% "
+label-warn = "  %temperature% "
+
+
+[module/memory]
+type = internal/memory
+interval = 3
+format = <label>
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground}
+label-foreground = #ffffff
+label = %{A1:termite --geometry=500x300 --exec=htop &:}%percentage_used%%%{A}
+
+
+[module/cpu]
+type = internal/cpu
+interval = 1.5
+
+format = <label> <ramp-coreload>
+
+label =
+label-font = 3
+label-foreground = #99
+
+ramp-coreload-0 = ▁
+ramp-coreload-0-font = 5
+ramp-coreload-0-foreground = #00AD80
+ramp-coreload-1 = ▂
+ramp-coreload-1-font = 5
+ramp-coreload-1-foreground = #00AD80
+ramp-coreload-2 = ▃
+ramp-coreload-2-font = 4
+ramp-coreload-2-foreground = #00AD80
+ramp-coreload-3 = ▄
+ramp-coreload-3-font = 5
+ramp-coreload-3-foreground = #00AD80
+ramp-coreload-4 = ▅
+ramp-coreload-4-font = 5
+ramp-coreload-4-foreground = #00AD80
+ramp-coreload-5 = ▆
+ramp-coreload-5-font = 4
+ramp-coreload-5-foreground = #F97B75
+ramp-coreload-6 = ▇
+ramp-coreload-6-font = 4
+ramp-coreload-6-foreground = #F97B75
+ramp-coreload-7 = █
+ramp-coreload-7-font = 5
+ramp-coreload-7-foreground = #F97B75
+
+
+[module/time]
+type = internal/date
+interval = 5
+label-foreground = ${colors.foreground}
+date-alt = " %Y-%m-%d"
+time = "%H:%M "
+time-alt = "%H:%M:%S "
+format-prefix = " ||"
+format-prefix-foreground = #92929E
+label = %date% %time%
+label-font = 4
+
+[module/pkg]
+type = custom/script
+label-foreground = ${colors.foreground}
+label-background = ${colors.b-alt}
+exec = $HOME/.config/polybar/scripts/pkg.sh
+exec-if = "ping -c 1 8.8.8.8 > /dev/null"
+click-left = $HOME/.config/polybar/scripts/update.sh
+click-right = $HOME/.config/polybar/scripts/aur-update.sh
+label-padding = 0
+interval = 1500
+tail = true
+
+
+[module/compton]
+type = custom/script
+label-background = ${colors.b-alt}
+exec = $HOME/.config/polybar/scripts/compton.sh
+click-left = $HOME/.config/polybar/scripts/compton-toggle.sh
+click-right = $HOME/.config/polybar/scripts/compton-toggle.sh
+interval = 2
+label-padding = 1
+
+
+[module/window_count]
+type = custom/script
+interval = 1
+label = %{A1:skippy-xd --toggle-window-picker:}   %output%  %{A}
+exec = echo "$(($(wmctrl -l -i | wc -l)-1))"
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
+format-padding = 3
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+label-mounted =  %mountpoint%:%percentage_used%%
+label-mounted-foreground = ${colors.foreground}
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.blue}
+
+
+
+[module/volume]
+type = internal/volume
+master-mixer = Master
+format-volume = <label-volume><bar-volume>
+label-volume = "   "
+label-volume-foreground = ${colors.foreground}
+label-volume-background = ${colors.b-alt}
+format-muted-prefix = "  "
+format-muted-foreground = ${colors.foreground}
+format-muted-background = ${colors.b-alt}
+label-muted = sound muted
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.foreground}
+bar-volume-gradient = true
+bar-volume-indicator = "➤"
+bar-volume-indicator-foreground = #F97B75
+bar-volume-indicator-backround = #158A98
+bar-volume-fill-background = #091119
+bar-volume-fill-foreground = #1EB3BF
+bar-volume-fill = "─"
+bar-volume-empty = "─"
+bar-volume-empty-foreground = ${colors.foreground}
+bar-volume-empty-background = ${colors.b-alt}
+format-padding = 3
+
+[module/xbacklight]
+type = internal/xbacklight
+output = eDP-1
+format = <ramp> <bar>
+
+ramp-0 = 
+ramp-0-foreground = #666
+ramp-1 = 
+ramp-1-foreground = #999
+ramp-2 = 
+ramp-2-foreground = #fff
+
+bar-width = 12
+bar-indicator = 
+bar-indicator-font = 2
+bar-indicator-foreground = #158A98
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #F97B75
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = #262B36
+
+
+[module/trash]
+interval = 1
+type = custom/script
+exec = $HOME/.config/polybar/scripts/trash
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground}
+format-background = ${colors.b-alt}
+click-right = rm -rf $HOME/.local/share/Trash/files/*
+click-left = exo-open --launch FileManager $HOME/.local/share/Trash/files
+
+
+
+
+
+
+[module/workspaces]
+type = internal/xworkspaces
+enable-click = true
+enable-scroll = true
+format-padding = 1
+Additional formatting
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+;icon-default = 
+
+format = <label-state>
+label-monitor = %name%
+
+label-active = " %icon% "
+label-active-foreground = #20D4EA
+label-active-background = ${colors.background}
+label-active-underline = #C3437F
+
+label-occupied = " %icon% %name% "
+label-occupied-underline = ${colors.blue}
+label-occupied-background = ${colors.background}
+label-occupied-foreground = ${colors.foreground}
+
+label-urgent = " %icon% %name% "
+label-urgent-foreground = ${colors.urgent}
+label-urgent-background = ${colors.background}
+label-urgent-underline = ${colors.urgent}
+
+label-empty = " %icon% "
+label-empty-foreground = ${colors.foreground}
+
+
+
+
+
+
+
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;    Extra Modules  (not used)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+[module/title]
+type = custom/script
+interval = 1
+label = %output%
+label-maxlen = 65
+exec = echo "$(xtitle)"
+format = <label>
+format-background = ${colors.b-alt}
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground}
+format-padding = 3
+
+
+
+[module/eth]
+type = internal/network
+interface = eno1
+interval = 1
+label-connected = "  "
+label-connected-foreground = ${colors.foreground}
+label-connected-background = ${colors.b-alt}
+label-disconnected = "  "
+label-disconnected-foreground = ${colors.foreground}
+label-disconnected-background = ${colors.b-alt}
+
+
+
+[module/coreuse]
+type = internal/cpu
+interval = 1
+format = <label>
+format-background = ${colors.b-alt}
+format-prefix = ""
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.foreground}
+label = %percentage%%
+ramp-coreload-0 = %{F#81817F}▂%{F-}
+ramp-coreload-1 = %{F#81817F}▃%{F-}
+ramp-coreload-2 = %{F#D1D1D0}▄%{F-}
+ramp-coreload-3 = %{F#D1D1D0}▅%{F-}
+ramp-coreload-4 = %{F#D1D1D0}▆%{F-}
+ramp-coreload-5 = %{F#FFFFFF}▇%{F-}
+ramp-coreload-6 = %{F#FFFFFF}█%{F-}
+
+[module/ewmh]
+type = internal/xworkspaces
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; Create click handler used to focus desktop
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle desktops
+; Default: true
+enable-scroll = true
+
+; icon-[0-9]+ = <desktop-name>;<icon>
+; NOTE: The desktop name needs to match the name configured by the WM
+; You can get a list of the defined desktops using:
+; $ xprop -root _NET_DESKTOP_NAMES
+icon-0 = code;♚
+icon-1 = office;♛
+icon-2 = graphics;♜
+icon-3 = mail;♝
+icon-4 = web;♞
+icon-default = 
+
+; Available tags:
+;   <label-monitor>
+;   <label-state> - gets replaced with <label-(active|urgent|occupied|empty)>
+; Default: <label-state>
+format = <label-state>
+
+; Available tokens:
+;   %name%
+; Default: %name%
+label-monitor = %name%
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%
+label-active = 
+label-active-foreground = #38BF8F
+label-active-background = #0A0D15
+label-active-underline = #ffffff
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-occupied = %icon%
+label-occupied-underline = #555555
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon
+%  %name%
+label-urgent = 
+label-urgent-foreground = #37A7B8
+label-urgent-background = #bd2c40
+label-urgent-underline = #9894B8
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-empty = 
+label-empty-foreground = #55
+
+[module/config]
+type = custom/script
+exec = /home/pringle/bin/current_config
+interval = 1
+
+label = %output%
+label-padding-left = 2
+format = "<label>"
+format-prefix = ...
+format-prefix-padding-left = 3
+format-prefix-font = 2
+format-prefix-foreground = #ffffff
+
+click-left = /home/pringle/go/bin/gorice dump i3 /home/pringle/.gorice/output.yaml.template; /home/pringle/bin/config_ui
+click-middle = /home/pringle/go/bin/gorice dump .i3 /home/pringle/.gorice/output.yaml.template; /home/pringle/bin/config_ui
+click-right = xfce4-terminal -e 'env PROMPT_COMMAND="unset PROMPT_COMMAND; gorice edit i3/current; exit"; bash'
+
+[module/gmail]
+type = custom/script
+exec = ~/.config/polybar/gmail/launch.py
+tail = true
+click-left = xdg-open https://mail.google.com
+format-prefix = 📧
+format-prefix-foreground = #ffffff
+
+[module/pipe]
+type = custom/text
+content = "|"
+content-background = #0A0D15
+content-foreground = #0A0D15
+content-padding = 1
+
+[module/mail]
+type = custom/script
+interval = 10
+format = <label>
+label = 
+click-left = xdg-open https://mail.google.com
+exec = /home/pringle/bin/notify
+
+
+
+[module/menu]
+type = custom/menu
+
+format-spacing = 1
+label-open = "  "
+label-open-foreground = #ffffff
+label-closed-background = #FAFDFF
+label-close = "  "
+label-close-foreground = #BA386F
+label-separator = "│"
+label-separator-foreground = #F9987D
+menu-0-0 = Most Used
+menu-0-0-exec = menu-open-1
+menu-0-1 = Ricing
+menu-0-1-exec = menu-open-2
+menu-0-2 = Media
+menu-0-2-exec = menu-open-3
+menu-0-3 = 
+menu-0-3-exec = menu-open-4
+
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch thunar
+menu-1-3 = "  "
+menu-1-3-exec = atom
+
+menu-2-0 = "  "
+menu-2-0-exec = gcolor2
+menu-2-1 = "  "
+menu-2-1-exec = spotify --force-device-scale-factor=1.5
+menu-2-2 = "  "
+menu-2-2-exec = wpg
+menu-2-3 = "  "
+menu-2-3-exec = yakyak
+menu-2-4 = "  "
+menu-2-4-exec = lxappearance
+menu-2-5 = "  "
+menu-2-5-exec = scrot %F-%S_$wx$h_scrot.png -e 'mv $f ~/images'
+
+menu-3-0 = "  "
+menu-3-0-exec = audacious &
+menu-3-1 = "  "
+menu-3-1-exec = playerctl stop
+menu-3-2 = "  "
+menu-3-2-exec = playerctl previous
+menu-3-3 = "  "
+menu-3-3-exec = playerctl play-pause
+menu-3-4 = "  "
+menu-3-4-exec = playerctl next
+
+menu-4-0 = "  "
+menu-4-0-exec = slimlock
+menu-4-1 = "  "
+menu-4-1-exec = systemctl reboot
+menu-4-2 = "  "
+menu-4-2-exec = systemctl poweroff
+
+[module/gplus]
+type = custom/text
+content = 
+content-foreground = ${colors.foreground}
+click-left = ice-firefox google+
+
+[module/notify]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = ">> "
+format-prefix-foreground = #d93257
+;format-underline = #c38159
+exec = /home/pringle/bin/notify
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = "  "
+format-prefix-foreground = #7A7A7A
+label-foreground = #ffffff
+exec = ~/.config/polybar/weather
+
+[module/redshift]
+type = custom/script
+interval = 5
+format-prefix = #d93257
+label = 
+exec = /home/pringle/.config/polybar/redshift.sh
+
+[module/pavolume]
+type = custom/script
+interval = 2
+label = %output%
+exec = ~/.config/polybar/pavolume.sh
+click-right = exec pavucontrol
+click-left = ~/.config/polybar/pavolume.sh --togmute
+scroll-up = ~/.config/polybar/pavolume.sh --up
+scroll-down = ~/.config/polybar/pavolume.sh --down
+
+
+
+[module/mpd]
+type                  = internal/mpd
+label-song            = %artist% - %title%
+label-song-maxlen     = 65
+label-song-ellipsis   = true
+format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-random> <label-song> <bar-progress>
+format-offline = <icon-prev>  <icon-play> <icon-next>  <bar-progress>
+label-song-foreground = ${colors.foreground}
+label-padding = 1
+label-song-background = ${colors.background}
+icon-pause-background = ${self.label-song-background}
+icon-play-background  = ${self.label-song-background}
+icon-pause-foreground = ${self.label-song-foreground}
+icon-stop-foreground = ${self.label-song-foreground}
+icon-play-foreground  = ${self.label-song-foreground}
+label-song-padding = 1
+icon-prev  = ""
+icon-stop  = ""
+icon-pause = ""
+icon-play  = ""
+icon-next  = ""
+icon-random = ""
+toggle-off-foreground = ${colors.foreground}
+toggle-on-foreground  = ${colors.red}
+bar-progress-width = 20
+bar-progress-indicator = 
+bar-progress-fill = 
+bar-progress-empty = 
+bar-progress-fill-foreground = ${colors.foreground}
+bar-progress-indicator-foreground = ${colors.red}
+
+[module/gcolor]
+type = custom/text
+content =
+content-foreground = #ffffff
+click-left = gcolor2
+
+[module/vivaldi]
+type = custom/text
+content =
+content-foreground = #ffffff
+click-left = exo-open --launch WebBrowser &
+
+
+[module/fm]
+type = custom/text
+content = 
+content-foreground = #ffffff
+click-left = thunar &
+click-right = gksu thunar &
+
+[module/scrot]
+type = custom/text
+content =
+content-foreground = #ffffff
+click-left = scrot %F-%S_$wx$h_scrot.png -e 'mv $f ~/scrot' &
+
+[module/term]
+type = custom/text
+content = 
+content-foreground = #ffffff
+click-left = xfce4-terminal &
+click-right = gksu xfce4-terminal &
+
+[module/clip]
+type = custom/text
+content = 
+content-foreground = #ffffff
+click-left = diodon
+
+[module/editor]
+type = custom/text
+content = 
+content-foreground = #ffffff
+click-left = subl3 &
+click-right = geany &
+
+
+[module/spotify]
+type = custom/script
+format-label = 
+exec = sh ~/.config/polybar/spotify
+interval = 1
+
+
+[module/seperator]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator2]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator3]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+format-background = ${colors.background}
+label-open = "   "
+label-open-foreground = ${colors.foreground}
+label-open-background = ${colors.background}
+label-close = "    "
+label-close-foreground = #CC3E79
+label-separator = " | "
+label-separator-foreground = #1DCAE0
+# Top level
+menu-0-0 = "  Favorites "
+menu-0-0-exec = menu-open-1
+menu-0-1 = "  Utility"
+menu-0-1-exec = menu-open-2
+menu-0-2 = "  System "
+menu-0-2-exec = menu-open-3
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = gcolor2 &
+# 2
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = lxappearance &
+menu-2-3 = "  "
+menu-2-3-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+# 3
+menu-3-0 = "   "
+menu-3-0-exec = slimlock
+menu-3-1 = "   "
+menu-3-1-exec = openbox --exit
+menu-3-2 = "  "
+menu-3-2-exec = systemctl reboot
+menu-3-3 = "  "
+menu-3-3-exec = systemctl poweroff
+
+
+[module/email]
+type = custom/text
+content = 
+content-foreground = ${colors.foreground}
+click-left = claws-mail &
+
+[module/networkmanager]
+type = custom/text
+content = net 
+content-foreground = ${colors.foreground}
+click-left = networkmanager_dmenu
+format-padding = 1
+
+[module/network]
+type = custom/script
+label-background = ${colors.background}
+exec = $HOME/.config/polybar/scripts/network.sh
+click-left = networkmanager_dmenu
+click-right = networkmanager_dmenu
+label-padding = 1
+interval = 1
+tail = true
+
+[module/reddit]
+type = custom/script
+interval = 10
+format = <label>
+exec = ~/.config/polybar/reddit.sh
+click-left = xdg-open https://reddit.com/message/unread
+format-module-margin = 3
+
+[module/padding]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding2]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding3]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding4]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+
+format-connected =  <label-connected>
+format-connected-underline = ${colors.magenta}
+label-connected = %essid%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+
+[module/reload]
+type = custom/script
+exec = echo " "
+click-left = /home/pringle/.config/polybar/reload
+label-foreground = ${colors.foreground}
+label-background = ${colors.b-alt}
+format-padding = 3
+
+[module/down]
+type = internal/network
+interface = wlp4s0
+interval = 3.0
+ping-interval = 10
+
+format-connected =  <label-connected>
+format-connected-foreground = ${colors.green}
+format-connected-underline = ${colors.green}
+format-packetloss =  <label-connected>
+format-packetloss-foreground = ${colors.skin}
+format-packetloss-underline = ${colors.skin}
+format-disconnected = -
+format-disconnected-foreground = ${colors.red}
+format-disconnected-underline = ${colors.red}
+label-connected = %downspeed%
+
+[module/up]
+type = internal/network
+interface = wlp4s0
+interval = 3.0
+ping-interval = 10
+
+format-connected = <label-connected>
+format-connected-foreground = ${colors.red}
+format-connected-underline = ${colors.red}
+format-packetloss = <label-connected>
+format-packetloss-foreground = ${colors.red}
+format-packetloss-underline = ${colors.red}
+format-disconnected =  -
+format-disconnected-foreground = ${colors.red}
+format-disconnected-underline = ${colors.red}
+label-connected = %upspeed%
+
+;
+;
+;
+;      

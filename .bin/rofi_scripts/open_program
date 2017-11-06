@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+
+# -----------------------------------------------------------------------------
+# open_program
+# Description: App launcher
+# -----------------------------------------------------------------------------
+# Useage:      $ ./open_program
+# -----------------------------------------------------------------------------
+
+# open the file_manager
+#   programs are prioritized in this order:
+#   1. ranger
+function open_file_manager() {
+    # check for ranger
+    if [[ -x "$(which ranger 2> /dev/null)" ]] && [[ -x "$(which urxvtc 2> /dev/null)" ]] && [[ -n "$(pidof urxvtd 2> /dev/null)" ]]; then
+        urxvtc -e 'ranger'
+
+    # didn't find anything
+    else
+        notify-send "Error" "Could not find a file manager"
+        exit 2
+    fi
+}
+
+# open the music_player
+#   programs are prioritized in this order:
+#   1. ncmpc
+function open_music_player() {
+    # check for ncmpc
+    if [[ -x "$(which ncmpc 2> /dev/null)" ]] && [[ -x "$(which urxvtc 2> /dev/null)" ]] && [[ -n "$(pidof urxvtd 2> /dev/null)" ]]; then
+        # ncmpc doesn't follow xdg standards so specify config file that does
+        if [[ -n "$XDG_CONFIG_HOME" ]]; then
+            local -r config="$XDG_CONFIG_HOME/ncmpc/config"
+        else
+            local -r config="$HOME/.config/ncmpc/config"
+        fi
+
+        # check if config is readable; use it if true
+        if [[ -r "$config" ]]; then
+            urxvtc -e 'ncmpc' -f "$config"
+        else
+            urxvtc -e 'ncmpc'
+        fi
+
+    # didn't find anything
+    else
+        notify-send "Error" "Could not find a music player"
+        exit 2
+    fi
+}
+
+# open the spotlight
+#   programs are prioritized in this order:
+#   1. dmenu
+function open_spotlight() {
+    # Source colors
+    . "$HOME/.local/bin/colors"
+
+    # check for rofi
+    if [[ -x "$(which rofi 2> /dev/null)" ]]; then
+        # color "bg,fg,bgalt,hlbg,hlfg"
+        rofi -show run \
+            -no-show-match \
+            -hide-scrollbar \
+            -separator-style 'none' \
+            -font 'Source code pro 10' \
+            -color-window "${background},${color7},${background}" \
+            -color-normal "${background},${foreground},${background},${color7},${foreground}" \
+            -color-urgent "${background},${foreground},${background},${color7},${foreground}" \
+            -color-active "${background},${foreground},${background},${color7},${foreground}"
+
+    # didn't find anything
+    else
+        notify-send "Error" "Could not find a spotlight"
+        exit 2
+    fi
+}
+
+# open the terminal
+#   programs are prioritized in this order:
+#   1. $TERMINAL
+#   2. urxvtc
+function open_terminal() {
+    if [[ -n "$TERMINAL" ]] && [[ -x "$(which $TERMINAL 2> /dev/null)" ]]; then
+        "$TERMINAL"
+
+    # check for urxvtc and running urxvtd
+    elif [[ -x "$(which urxvtc 2> /dev/null)" ]] && [[ -n "$(pidof urxvtd 2> /dev/null)" ]]; then
+        urxvtc
+
+    # didn't find anything
+    else
+        notify-send "Error" "Could not find a terminal"
+        exit 2
+    fi
+}
+
+# open the web_browser
+#   programs are prioritized in this order:
+#   1. $BRWOSER
+#   2. firefox
+#   3. chromium
+function open_web_browser() {
+    # check for $BROWSER
+    if [[ -n "$BROWSER" ]] && [[ -x "$(which $BROWSER 2> /dev/null)" ]]; then
+        "$BROWSER"
+
+    # check for firefox
+    elif [[ -x "$(which firefox 2> /dev/null)" ]]; then
+        firefox
+
+    # check for chromium
+    elif [[ -x "$(which chromium 2> /dev/null)" ]]; then
+        chromium
+
+    # didn't find anything
+    else
+        notify-send "Error" "Could not find a web browser"
+        exit 2
+    fi
+}
+
+function main() {
+    case "$1" in
+        file_manager)
+            open_file_manager
+            ;;
+        music_player)
+            open_music_player
+            ;;
+        spotlight)
+            open_spotlight
+            ;;
+        terminal)
+            open_terminal
+            ;;
+        web_browser)
+            open_web_browser
+            ;;
+        *)
+            exit 2
+            ;;
+    esac
+}
+
+main "$@"
